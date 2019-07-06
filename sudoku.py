@@ -3,12 +3,7 @@ from functions import generate_new_game, print_the_puzzle, get_invalid_answers, 
 
 startTime = datetime.now()
 
-answers = [1, 2, 3, 4, 5, 6, 7, 8, 9]
-
-# Create a dictionary of all the co-ordinates with no values
-sudoku = generate_new_game()
-
-# Add the clues for sudoku1.png
+# Clues for sudoku1.png
 clues_for_sudoku_1 = {
 	11 : 6,
 	15 : 9,
@@ -46,7 +41,7 @@ clues_for_sudoku_1 = {
 	99 : 2,
 }
 
-# Add the clues for sudoku1.png
+# Clues for sudoku1.png
 clues_for_sudoku_2 = {
 	12 : 2,
 	13 : 8,
@@ -145,9 +140,14 @@ clues_for_Puzzle356 = {
 	98 : 3
 }
 
+# Create a dictionary of all the co-ordinates with no values
+sudoku = generate_new_game()
 
-sudoku = add_clues_to_game(clues_for_Puzzle356, sudoku)
-answer_cells = get_answer_cell_locations(clues_for_Puzzle356, sudoku)
+# Add a set of clues to the puzzle
+sudoku = add_clues_to_game(clues_for_sudoku_2, sudoku)
+
+# Gerenate a list of all the empty cells in the puzzle
+answer_cells = get_answer_cell_locations(clues_for_sudoku_2, sudoku)
 
 # Print the puzzle
 print()
@@ -159,24 +159,28 @@ potential_solutions = {}
 
 i = 1
 while len(answer_cells) > 0:
-	# clear the dictionary and list to iterate again
+	# make sure the dictionary and lists are clear to start the iteration
 	potential_solutions.clear()
 	potential_answers = []
 	invalid_answers = []
 	answers = [1, 2, 3, 4, 5, 6, 7, 8, 9]
 	answers_left_before_iteration = len(answer_cells)
 
+	# find all valid answers for all empty cells
 	for cell in answer_cells:
 		invalid_answers = get_invalid_answers(cell, sudoku)
 		potential_answers = set(answers) - set(invalid_answers)
 		potential_answers = list(potential_answers)
 		potential_solutions.update({cell: potential_answers})
 
+	# find all cells with only one valid answer
+	# input the answers and remove the cells from the list of answer_cells
 	for location, answers in potential_solutions.items():
 		if len(answers) == 1:
 			sudoku.update({location : answers[0]})
 			answer_cells.remove(location)
 
+	# if no answers are found print an error and escape the loop
 	if len(answer_cells) == answers_left_before_iteration:
 		print("FAILED: No certain answers left")
 		break
@@ -187,6 +191,7 @@ while len(answer_cells) > 0:
 
 	i += 1
 
+# when no answers are left to be found print solved and how long it took
 if len(answer_cells) <= 0:
 	print("")
 	print("Solved in {}.\n".format(datetime.now() - startTime))
