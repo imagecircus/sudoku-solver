@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Sudoku Solver</title>
+  <style type="text/css">
+    .sudoku {
+      background: #fff;
+      border: 2px solid black
+    }
+    .sudoku td {
+      width: 30px;
+      height: 30px;
+      border: 1px solid #aaa;
+      text-align: center;
+    }
+    .sudoku td:nth-child(3) {
+      border-right: 4px solid #666;
+    }
+
+    .sudoku td:nth-child(6) {
+      border-right: 4px solid #666;
+    }
+
+    .sudoku tr:nth-child(3) td {
+      border-bottom: 4px solid #666;
+    }
+    .sudoku tr:nth-child(6) td {
+      border-bottom: 4px solid #666;
+    }
+    .clue {
+      background: #aaa;
+      color: #fff;
+    }
+  </style>
+</head>
+<body>
+<h1>sudoku2.png</h1>
+<table class="sudoku"
+cellspacing="none">
+  <tr>
+    <td> </td>
+    <td class="clue">2</td>
+    <td class="clue">8</td>
+    <td> </td>
+    <td> </td>
+    <td> </td>
+    <td class="clue">3</td>
+    <td class="clue">6</td>
+    <td> </td>
+  </tr>
+  <tr>
+    <td class="clue">5</td>
+    <td> </td>
+    <td> </td>
+    <td class="clue">9</td>
+    <td> </td>
+    <td class="clue">7</td>
+    <td> </td>
+    <td> </td>
+    <td class="clue">2</td>
+  </tr>
+  <tr>
+    <td class="clue">1</td>
+    <td> </td>
+    <td class="clue">4</td>
+    <td class="clue">6</td>
+    <td> </td>
+    <td class="clue">3</td>
+    <td class="clue">8</td>
+    <td> </td>
+    <td class="clue">5</td>
+  </tr>
+  <tr>
+    <td> </td>
+    <td class="clue">8</td>
+    <td class="clue">2</td>
+    <td class="clue">5</td>
+    <td> </td>
+    <td class="clue">1</td>
+    <td class="clue">7</td>
+    <td class="clue">3</td>
+    <td> </td>
+  </tr>
+  <tr>
+    <td> </td>
+    <td> </td>
+    <td> </td>
+    <td> </td>
+    <td> </td>
+    <td> </td>
+    <td> </td>
+    <td> </td>
+    <td> </td>
+  </tr>
+  <tr>
+    <td> </td>
+    <td class="clue">1</td>
+    <td class="clue">7</td>
+    <td class="clue">4</td>
+    <td> </td>
+    <td class="clue">8</td>
+    <td class="clue">5</td>
+    <td class="clue">2</td>
+    <td> </td>
+  </tr>
+  <tr>
+    <td class="clue">8</td>
+    <td> </td>
+    <td class="clue">5</td>
+    <td class="clue">2</td>
+    <td> </td>
+    <td class="clue">6</td>
+    <td class="clue">9</td>
+    <td> </td>
+    <td class="clue">3</td>
+  </tr>
+  <tr>
+    <td class="clue">2</td>
+    <td> </td>
+    <td> </td>
+    <td class="clue">7</td>
+    <td> </td>
+    <td class="clue">9</td>
+    <td> </td>
+    <td> </td>
+    <td class="clue">6</td>
+  </tr>
+  <tr>
+    <td> </td>
+    <td class="clue">9</td>
+    <td class="clue">6</td>
+    <td> </td>
+    <td> </td>
+    <td> </td>
+    <td class="clue">2</td>
+    <td class="clue">5</td>
+    <td> </td>
+  </tr>
+</table>
+
+
+
+</body>
+</html>
