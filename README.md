@@ -1,7 +1,7 @@
 # Sudoku Solver
-I had been wondering for a while if I could write a script that would solve sudoku puzzles and I also wanted to learn Python. This is an attempt at both.
+I had been wondering for a while if I could write a script that would solve sudoku puzzles and I also wanted to learn Python. This is an *attempt* at both.
 
-Currently this project will only solve the *very simplest* form of 9x9 Sudoku puzzles.
+Currently this project will only solve the **very simplest** form of 9x9 Sudoku puzzles.
 
 # How it works
 - Calculates all valid answers for every empty cell
