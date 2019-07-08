@@ -1,5 +1,5 @@
 from datetime import datetime
-from functions import generate_new_game, print_the_puzzle, get_invalid_answers, add_clues_to_game, get_answer_cell_locations, get_box_cell_is_in, check_boxes_for_unique_values
+from functions import generate_new_puzzle, print_the_puzzle, get_invalid_answers, get_all_valid_answers, add_clues_to_puzzle, add_answers_to_puzzle, get_empty_cell_locations, get_box_cell_is_in, check_boxes_for_unique_values, find_cells_with_one_answer
 
 startTime = datetime.now()
 
@@ -40,7 +40,6 @@ clues_for_sudoku_1 = {
 	95 : 4,
 	99 : 2,
 }
-
 # Clues for sudoku1.png
 clues_for_sudoku_2 = {
 	12 : 2,
@@ -109,7 +108,6 @@ clues_for_Puzzle384 = {
 	89 : 1,
 	92 : 7,
 }
-
 # Clues for Puzzle 384
 clues_for_Puzzle356 = {
 	15 : 8,
@@ -141,13 +139,13 @@ clues_for_Puzzle356 = {
 }
 
 # Create a dictionary of all the co-ordinates with no values
-sudoku = generate_new_game()
+sudoku = generate_new_puzzle()
 
 # Add a set of clues to the puzzle
-sudoku = add_clues_to_game(clues_for_Puzzle356, sudoku)
+sudoku = add_clues_to_puzzle(clues_for_Puzzle356, sudoku)
 
 # Gerenate a list of all the empty cells in the puzzle
-answer_cells = get_answer_cell_locations(clues_for_Puzzle356, sudoku)
+empty_cells = get_empty_cell_locations(sudoku)
 
 # Print the puzzle
 print()
@@ -155,41 +153,30 @@ print("Puzzle")
 print_the_puzzle(sudoku)
 
 # create a placeholder to store the potential solutions
-potential_solutions = {}
+all_valid_answers = {}
 
 i = 1
-while len(answer_cells) > 0:
-	# make sure the dictionary and lists are clear to start the iteration
-	potential_solutions.clear()
-	potential_answers = []
-	invalid_answers = []
-	answers = [1, 2, 3, 4, 5, 6, 7, 8, 9]
-	answers_left_before_iteration = len(answer_cells)
+while len(empty_cells) > 0:
 
-	# find all valid answers for all empty cells
-	for cell in answer_cells:
-		invalid_answers = get_invalid_answers(cell, sudoku)
-		potential_answers = set(answers) - set(invalid_answers)
-		potential_answers = list(potential_answers)
-		potential_solutions.update({cell: potential_answers})
+	answers_left_before_iteration = len(empty_cells)
+	print("There are {} answers left to find \n\n".format(answers_left_before_iteration))
 
+	all_valid_answers = get_all_valid_answers(sudoku)
 
 	# find all cells with only one valid answer
-	# input the answers and remove the cells from the list of answer_cells
-	for location, answers in potential_solutions.items():
-		if len(answers) == 1:
-			sudoku.update({location : answers[0]})
-			answer_cells.remove(location)
-			
+	# input the answers and update list of empty_cells
+	single_answers = find_cells_with_one_answer(all_valid_answers)
+	add_answers_to_puzzle(single_answers, sudoku)
+	empty_cells = get_empty_cell_locations(sudoku)
 
-	unique_values_in_box = check_boxes_for_unique_values(potential_solutions)
-	for location, answers in unique_values_in_box.items():
-		if len(answers) == 1:
-			sudoku.update({location : answers[0]})
-			answer_cells.remove(location)
+	# find all unique values within every box
+	# input the answers and update list of empty_cells
+	unique_values_in_box = check_boxes_for_unique_values(all_valid_answers)
+	add_answers_to_puzzle(unique_values_in_box, sudoku)
+	empty_cells = get_empty_cell_locations(sudoku)
 
 	# if no answers are found print an error and escape the loop
-	if len(answer_cells) == answers_left_before_iteration:
+	if len(empty_cells) == answers_left_before_iteration:
 		print("FAILED: No certain answers left")
 		break
 
@@ -200,6 +187,6 @@ while len(answer_cells) > 0:
 	i += 1
 
 # when no answers are left to be found print solved and how long it took
-if len(answer_cells) <= 0:
+if len(empty_cells) <= 0:
 	print("")
 	print("Solved in {}.\n".format(datetime.now() - startTime))

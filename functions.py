@@ -1,33 +1,56 @@
 
 # Create a dictionary of all the co-ordinates with no values
-def generate_new_game():
+def generate_new_puzzle():
 	skips = [20, 30, 40, 50, 60, 70, 80, 90]
 	i = 11
-	game = {}
+	puzzle = {}
 	while i<=99:
 		if i in skips:
 			i += 1
 			continue
-		game.update({ i : ""})
+		puzzle.update({ i : ""})
 		i += 1
-	return game
+	return puzzle
 
 # add the clues the empty sudoku game
-def add_clues_to_game(clues, game):
+def add_clues_to_puzzle(clues, puzzle):
 	for location, value in clues.items():
-		game[location] = value
-	return game
+		puzzle[location] = value
+	return puzzle
 
-# get a list of the locations of the cells that are initally blank
-def get_answer_cell_locations(clues, game):
-	answer_cells = []
-	for location, value in game.items():
-		if location in clues:
-			continue
-		else:
-			answer_cells.append(location)
+# get a list of the locations of the cells that are empty
+def get_empty_cell_locations(puzzle):
+  empty_cells = []
+  for location, value in puzzle.items():
+    if value == "":
+      empty_cells.append(location)
+    else:
+      continue
+  return empty_cells
 
-	return answer_cells
+
+def get_all_valid_answers(puzzle):
+  empty_cells = get_empty_cell_locations(puzzle)
+  # create a placeholder to store the potential solutions
+  all_valid_answers = {}
+
+  # make sure the dictionary and lists are clear to start the iteration
+  all_valid_answers.clear()
+  cell_answers = []
+  invalid_answers = []
+  answers = [1, 2, 3, 4, 5, 6, 7, 8, 9]
+
+  # find all valid answers for all empty cells
+  for cell in empty_cells:
+  	invalid_answers = get_invalid_answers(cell, puzzle)
+  	cell_answers = list(set(answers) - set(invalid_answers))
+  	all_valid_answers.update({cell: cell_answers})
+  return all_valid_answers
+
+def add_answers_to_puzzle(answers, puzzle):
+	for location, answer in answers.items():
+		puzzle.update({location : answer[0]})
+
 
 # print the full puzzle to the command line
 def print_the_puzzle(puzzle):
@@ -185,6 +208,13 @@ def get_box_cell_is_in(cell, game):
 
 	return selected_box
 
+def find_cells_with_one_answer(answers):
+  single_answers = {}
+  for location, answers in answers.items():
+    if len(answers) == 1:
+      single_answers.update({location : answers})
+  return single_answers
+
 # check within potential answers for each box for values that only appear once
 # return a dictionary of unique values and their locations
 def check_boxes_for_unique_values(potential_answers):
@@ -243,7 +273,7 @@ def check_boxes_for_unique_values(potential_answers):
 	return output
 	# NOTE:
 	# This function is not actually doing what it was intended to. While it does
-	# make the script solve puzzles faster and in fewer iterations, it is not 
+	# make the script solve puzzles faster and in fewer iterations, it is not
 	# actually looking for unique values within the box. Some of the logic
 	# from here should probably move into a different function and this should
 	# be rewritten to achieve its purpose.
