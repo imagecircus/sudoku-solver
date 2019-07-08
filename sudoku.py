@@ -1,5 +1,5 @@
 from datetime import datetime
-from functions import generate_new_game, print_the_puzzle, get_invalid_answers, add_clues_to_game, get_answer_cell_locations, get_box_cell_is_in
+from functions import generate_new_game, print_the_puzzle, get_invalid_answers, add_clues_to_game, get_answer_cell_locations, get_box_cell_is_in, check_boxes_for_unique_values
 
 startTime = datetime.now()
 
@@ -144,10 +144,10 @@ clues_for_Puzzle356 = {
 sudoku = generate_new_game()
 
 # Add a set of clues to the puzzle
-sudoku = add_clues_to_game(clues_for_sudoku_2, sudoku)
+sudoku = add_clues_to_game(clues_for_Puzzle356, sudoku)
 
 # Gerenate a list of all the empty cells in the puzzle
-answer_cells = get_answer_cell_locations(clues_for_sudoku_2, sudoku)
+answer_cells = get_answer_cell_locations(clues_for_Puzzle356, sudoku)
 
 # Print the puzzle
 print()
@@ -173,9 +173,17 @@ while len(answer_cells) > 0:
 		potential_answers = list(potential_answers)
 		potential_solutions.update({cell: potential_answers})
 
+
 	# find all cells with only one valid answer
 	# input the answers and remove the cells from the list of answer_cells
 	for location, answers in potential_solutions.items():
+		if len(answers) == 1:
+			sudoku.update({location : answers[0]})
+			answer_cells.remove(location)
+			
+
+	unique_values_in_box = check_boxes_for_unique_values(potential_solutions)
+	for location, answers in unique_values_in_box.items():
 		if len(answers) == 1:
 			sudoku.update({location : answers[0]})
 			answer_cells.remove(location)

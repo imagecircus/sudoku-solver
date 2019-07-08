@@ -1,3 +1,4 @@
+
 # Create a dictionary of all the co-ordinates with no values
 def generate_new_game():
 	skips = [20, 30, 40, 50, 60, 70, 80, 90]
@@ -183,3 +184,66 @@ def get_box_cell_is_in(cell, game):
 				selected_box = box_9
 
 	return selected_box
+
+# check within potential answers for each box for values that only appear once
+# return a dictionary of unique values and their locations
+def check_boxes_for_unique_values(potential_answers):
+	boxes = []
+	box_1 = [11, 12, 13, 21, 22, 23, 31, 32, 33]
+	box_2 = [14, 15, 16, 24, 25, 26, 34, 35, 36]
+	box_3 = [17, 18, 19, 27, 28, 29, 37, 38, 39]
+	box_4 = [41, 42, 43, 51, 52, 53, 61, 62, 63]
+	box_5 = [44, 45, 46, 54, 55, 56, 64, 65, 66]
+	box_6 = [47, 48, 49, 57, 58, 59, 67, 68, 69]
+	box_7 = [71, 72, 73, 81, 82, 83, 91, 92, 93]
+	box_8 = [74, 75, 76, 84, 85, 86, 94, 95, 96]
+	box_9 = [77, 78, 79, 87, 88, 89, 97, 98, 99]
+	boxes += [box_1]
+	boxes += [box_2]
+	boxes += [box_3]
+	boxes += [box_4]
+	boxes += [box_5]
+	boxes += [box_6]
+	boxes += [box_7]
+	boxes += [box_8]
+	boxes += [box_9]
+
+	output = {}
+	for box in boxes:
+		this_box = {}
+		keys_to_remove = []
+		values_to_remove = []
+
+		# Create a dictionary of all the potential answers in a box
+		for location in box:
+			if location in potential_answers:
+				this_box.update({location : potential_answers.get(location)})
+
+		# Remove any potential answers that are a single value (definite answer)
+		# but store the value
+		for location, value in this_box.items():
+			if len(value) == 1:
+				keys_to_remove.append(location)
+				values_to_remove.append(value[0])
+		for key in keys_to_remove:
+			this_box.pop(key)
+
+		# Loop though all remaining values removing and known values from lists
+		# of answers
+		for location, value in this_box.items():
+			for number in value:
+				if number in values_to_remove:
+					this_box[location].remove(number)
+
+		# Create a dictionary of all the locations and values for definite answers
+		# within boxes
+		for location, value in this_box.items():
+			if len(value) == 1:
+				output.update({location : value})
+	return output
+	# NOTE:
+	# This function is not actually doing what it was intended to. While it does
+	# make the script solve puzzles faster and in fewer iterations, it is not 
+	# actually looking for unique values within the box. Some of the logic
+	# from here should probably move into a different function and this should
+	# be rewritten to achieve its purpose.
