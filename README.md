@@ -2,13 +2,15 @@
 I had been wondering for a while if I could write a script that would solve sudoku puzzles and I also wanted to learn Python. This is an *attempt* at both.
 
 ## So what does it do right now?
-Currently this project runs on the command line `python3 sudoku.py` and it will only solve the **very simplest** form of 9x9 Sudoku puzzles.
+Currently this project runs on the command line `python3 sudoku.py` and it will only solve fairly simple 9x9 Sudoku puzzles.
 
 ## How does it work?
+- Makes a list of all the cells that are empty
 - Calculates all valid answers for every empty cell
 - Looks for cells that only have one valid answer
-- Inserts the valid answer and removes the cell(s) from the list of empty cells
-- Loops back through the first three steps until all answers have been found
+- Looks for answers that only have one valid position within a 3x3 box
+- Inserts the valid answers
+- Loops back through the first five steps until all answers have been found
 - ... or fails if the number of answers left does not decrease after an iteration
 
 ## How is the puzzle stored?
@@ -112,6 +114,6 @@ Solved in 0:00:00.028963.
 ```
 
 ## Do you have any plans for the future?
-Yes, lots thanks. 
+Yes, lots thanks.
 
 I hope to see this project through to completion but it's a hobby so I don't see it happening quickly. The long term aim is to get it to the point where someone can upload a photo of a sudoku puzzle and the app will return the solution. There's a good chance that someone (or many others) has already achieved this but I'm trying to avoid looking into other people's solutions as this is really a learning project for me.
