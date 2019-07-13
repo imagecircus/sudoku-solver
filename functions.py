@@ -1,3 +1,4 @@
+from collections import Counter
 
 # Create a dictionary of all the co-ordinates with no values
 def generate_new_puzzle():
@@ -237,43 +238,32 @@ def check_boxes_for_unique_values(potential_answers):
 	boxes += [box_7]
 	boxes += [box_8]
 	boxes += [box_9]
-
+	i = 0
 	output = {}
 	for box in boxes:
 		this_box = {}
 		keys_to_remove = []
-		values_to_remove = []
-
+		all_values = []
+		i += 1
 		# Create a dictionary of all the potential answers in a box
 		for location in box:
 			if location in potential_answers:
 				this_box.update({location : potential_answers.get(location)})
 
-		# Remove any potential answers that are a single value (definite answer)
-		# but store the value
-		for location, value in this_box.items():
-			if len(value) == 1:
-				keys_to_remove.append(location)
-				values_to_remove.append(value[0])
-		for key in keys_to_remove:
-			this_box.pop(key)
+		# create a list of all possible answers in the box
+		for location, values in this_box.items():
+			for value in values:
+				all_values.append(value)
 
-		# Loop though all remaining values removing and known values from lists
-		# of answers
-		for location, value in this_box.items():
-			for number in value:
-				if number in values_to_remove:
-					this_box[location].remove(number)
+		# check the list for values that appear only once within the box
+		# output a dictionary of the locations and values of unique answers
+		for value, count in Counter(all_values).most_common():
+			if count == 1:
+				unique_answer = ""
+				unique_answer = value
+				for location, values in this_box.items():
+					for value in values:
+						if value == unique_answer:
+							output.update({location : [value]})
 
-		# Create a dictionary of all the locations and values for definite answers
-		# within boxes
-		for location, value in this_box.items():
-			if len(value) == 1:
-				output.update({location : value})
 	return output
-	# NOTE:
-	# This function is not actually doing what it was intended to. While it does
-	# make the script solve puzzles faster and in fewer iterations, it is not
-	# actually looking for unique values within the box. Some of the logic
-	# from here should probably move into a different function and this should
-	# be rewritten to achieve its purpose.
