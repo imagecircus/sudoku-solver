@@ -136,7 +136,7 @@ clues_for_Puzzle356 = {
 	98 : 3
 }
 
-# Clues for Puzzle-365.jpg - the script can solve this
+# Clues for sudoku-medium.png - the script can solve this
 clues_for_Sudoku_Medium = {
 	11 : 5,
 	12 : 9,
@@ -168,4 +168,36 @@ clues_for_Sudoku_Medium = {
 	96 : 5,
 	98 : 6,
 	99 : 8,
+}
+
+# Clues for sudoku-hard.png - the script can't solve this yet
+clues_for_Sudoku_Hard = {
+	21 : 7,
+	23 : 2,
+	27 : 1,
+	29 : 6,
+	33 : 8,
+	37 : 4,
+	42 : 2,
+	44 : 4,
+	45 : 8,
+	46 : 7,
+	48 : 5,
+	52 : 5,
+	53 : 7,
+	54 : 3,
+	56 : 1,
+	57 : 2,
+	58 : 6,
+	65 : 5,
+	72 : 6,
+	78 : 9,
+	82 : 9,
+	83 : 3,
+	87 : 8,
+	88 : 2,
+	92 : 7,
+	94 : 9,
+	96 : 2,
+	98 : 4,
 }
