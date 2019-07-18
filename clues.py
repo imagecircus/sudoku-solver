@@ -80,7 +80,7 @@ clues_for_sudoku_2 = {
 	98 : 5,
 }
 
-# Clues for Puzzle-384.jpg - the script can't solve this yet
+# Clues for Puzzle-384.jpg - the script can solve this
 clues_for_Puzzle384 = {
 	11 : 1,
 	16 : 3,
@@ -170,7 +170,7 @@ clues_for_Sudoku_Medium = {
 	99 : 8,
 }
 
-# Clues for sudoku-hard.png - the script can't solve this yet
+# Clues for sudoku-hard.png - the script can solve this
 clues_for_Sudoku_Hard = {
 	21 : 7,
 	23 : 2,
