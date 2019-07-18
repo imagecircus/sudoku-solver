@@ -9,6 +9,7 @@ Currently this project runs on the command line `python3 sudoku.py` and it will 
 - Calculates all valid answers for every empty cell
 - Looks for cells that only have one valid answer
 - Looks for answers that only have one valid position within a 3x3 box
+- Looks for answers that only have one valid position in a row or column
 - Inserts the valid answers
 - Loops back through the first five steps until all answers have been found
 - ... or fails if the number of answers left does not decrease after an iteration
