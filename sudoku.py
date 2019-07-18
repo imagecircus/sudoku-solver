@@ -1,4 +1,4 @@
-from clues import clues_for_sudoku_1, clues_for_sudoku_2, clues_for_Puzzle356, clues_for_Puzzle384, clues_for_Sudoku_Medium, clues_for_Sudoku_Hard
+from clues import clues_for_sudoku_1, clues_for_sudoku_2, clues_for_Puzzle356, clues_for_Puzzle384, clues_for_Sudoku_Medium, clues_for_Sudoku_Hard, clues_for_Sudoku_Expert
 from datetime import datetime
 from functions import generate_new_puzzle, print_the_puzzle, get_invalid_answers, get_all_valid_answers, add_clues_to_puzzle, add_answers_to_puzzle, get_empty_cell_locations, get_box_cell_is_in, check_boxes_for_unique_values, find_cells_with_one_answer, output_puzzle_as_json, check_rows_and_cols_for_unique_values
 
