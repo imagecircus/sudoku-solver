@@ -1,4 +1,5 @@
 from collections import Counter
+import json
 
 # Create a dictionary of all the co-ordinates with no values
 def generate_new_puzzle():
@@ -29,7 +30,7 @@ def get_empty_cell_locations(puzzle):
       continue
   return empty_cells
 
-
+# return a dictionary containing each cell location and all valid answers
 def get_all_valid_answers(puzzle):
   empty_cells = get_empty_cell_locations(puzzle)
   # create a placeholder to store the potential solutions
@@ -48,10 +49,10 @@ def get_all_valid_answers(puzzle):
   	all_valid_answers.update({cell: cell_answers})
   return all_valid_answers
 
+# add a dictionary of answers into the puzzle
 def add_answers_to_puzzle(answers, puzzle):
 	for location, answer in answers.items():
 		puzzle.update({location : answer[0]})
-
 
 # print the full puzzle to the command line
 def print_the_puzzle(puzzle):
@@ -123,6 +124,12 @@ def print_the_puzzle(puzzle):
 	print(row_8)
 	print(row_9)
 	print()
+
+# dump the puzzle into a JSON file with the name filename.json
+def output_puzzle_as_json(puzzle, filename):
+	the_filename = filename + ".json"
+	with open(the_filename, 'w') as json_file:
+	  json.dump(puzzle, json_file)
 
 # return the list of known invalid answers for the given cell
 def get_invalid_answers(cell, game):
@@ -209,6 +216,7 @@ def get_box_cell_is_in(cell, game):
 
 	return selected_box
 
+# return a dictionary of cell locations and answers for cells with only one answer
 def find_cells_with_one_answer(answers):
   single_answers = {}
   for location, answers in answers.items():
@@ -265,5 +273,86 @@ def check_boxes_for_unique_values(potential_answers):
 					for value in values:
 						if value == unique_answer:
 							output.update({location : [value]})
+
+	return output
+
+# return a dictionary of locations and answers for answers that only appear once in a row or col
+def check_rows_and_cols_for_unique_values(answers):
+	rows = {}
+	cols = {}
+	output = {}
+	i = 1
+	while i <= 9:
+		rows.update({"row {}".format(i) : {}})
+		cols.update({"col {}".format(i) : {}})
+		i += 1
+
+	for location, value in answers.items():
+
+		# use the first co-ordinate to get all the values for the row the cell is in
+		if int(str(location)[0]) == 1:
+			rows["row 1"][str(location)] = value
+		elif int(str(location)[0]) == 2:
+			rows["row 2"][str(location)] = value
+		elif int(str(location)[0]) == 3:
+			rows["row 3"][str(location)] = value
+		elif int(str(location)[0]) == 4:
+			rows["row 4"][str(location)] = value
+		elif int(str(location)[0]) == 5:
+			rows["row 5"][str(location)] = value
+		elif int(str(location)[0]) == 6:
+			rows["row 6"][str(location)] = value
+		elif int(str(location)[0]) == 7:
+			rows["row 7"][str(location)] = value
+		elif int(str(location)[0]) == 8:
+			rows["row 8"][str(location)] = value
+		elif int(str(location)[0]) == 9:
+			rows["row 9"][str(location)] = value
+
+		# use the second co-ordinate to get all the values for the column the cell is in
+		if int(str(location)[1]) == 1:
+			cols["col 1"][str(location)] = value
+		elif int(str(location)[1]) == 2:
+			cols["col 2"][str(location)] = value
+		elif int(str(location)[1]) == 3:
+			cols["col 3"][str(location)] = value
+		elif int(str(location)[1]) == 4:
+			cols["col 4"][str(location)] = value
+		elif int(str(location)[1]) == 5:
+			cols["col 5"][str(location)] = value
+		elif int(str(location)[1]) == 6:
+			cols["col 6"][str(location)] = value
+		elif int(str(location)[1]) == 7:
+			cols["col 7"][str(location)] = value
+		elif int(str(location)[1]) == 8:
+			cols["col 8"][str(location)] = value
+		elif int(str(location)[1]) == 9:
+			cols["col 9"][str(location)] = value
+
+	for row, answers in rows.items():
+		all_values = []
+		for location, values in answers.items():
+			for value in values:
+				all_values.append(value)
+
+		for value, count in Counter(all_values).most_common():
+			if count == 1:
+				for location, values in answers.items():
+					for single_value in values:
+						if single_value == value:
+							output.update({ int(location) : [value]})
+
+	for col, answers in cols.items():
+		all_values = []
+		for location, values in answers.items():
+			for value in values:
+				all_values.append(value)
+
+		for value, count in Counter(all_values).most_common():
+			if count == 1:
+				for location, values in answers.items():
+					for single_value in values:
+						if single_value == value:
+							output.update({ int(location) : [value]})
 
 	return output
