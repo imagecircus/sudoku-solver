@@ -1,6 +1,8 @@
 from collections import Counter
 import json
 
+# investigate adding functions for these techniques: https://www.kristanix.com/sudokuepic/sudoku-solving-techniques.php
+
 # Create a new puzzle with no values
 def generate_new_puzzle():
   puzzle = []
