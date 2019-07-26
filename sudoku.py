@@ -64,7 +64,7 @@ while len(empty_cells) > 0:
   # filename = "iteration-{}".format(iteration)
   # output_puzzle_as_json(sudoku, filename)
 
-# If there are no more answers to solve print the solved puzzle and time it took
+# If there are no more answers to solve then print the solved puzzle and the time it took
 if len(empty_cells) <= 0:
   print("\nCompleted")
   print_the_puzzle(sudoku)
